@@ -23,20 +23,20 @@ impl Iterator for Fibonacci {
     }
 }
 
-pub fn fibonacci(integer: u32) -> Result<u64, FibonacciError> {
-    if integer == 0 {
+pub fn fibonacci(index: u32) -> Result<u64, FibonacciError> {
+    if index == 0 {
         return Ok(0);
-    } else if integer == 1 {
+    } else if index == 1 {
         return Ok(1);
     }
 
-    let mut fib_iter = Fibonacci::new();
+    let mut fibo = Fibonacci::new();
     let mut result = 0;
 
-    for _ in 0..integer {
-        match fib_iter.next() {
+    for _ in 0..index {
+        match fibo.next() {
             Some(num) => result = num,
-            None => return Err(FibonacciError::Overflow(integer)),
+            None => return Err(FibonacciError::Overflow(index)),
         }
     }
 

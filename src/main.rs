@@ -5,15 +5,14 @@ use std::io::{self, Write};
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Sequência de Fibonacci:\n");
 
-    for n in 0..=10 {
-        let fibo = fibonacci(n).unwrap_result();
-        println!("O {n}º número na sequência de Fibonacci é {fibo}");
+    for n in 1..=10 {
+        let fibo = fibonacci(n - 1).unwrap_result();
+        println!("fibonacci({n:>2}): {fibo}");
     }
 
     println!();
 
-    println!("Obter a sequência de Fibonacci número N: ");
-    print!("Digite o número inteiro N: ");
+    print!("Para obter o valor de fibonacci(n) digite n: ");
 
     io::stdout().flush()?;
 
@@ -24,17 +23,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     std::io::stdin().read_line(&mut input)?;
 
     // Remove espaços em branco e converte a string para um número inteiro
-    let number = input
-        .trim()
-        .parse::<u32>()
-        .map_err(|parse_err| {
-            // Add a custom error message
-            FibonacciError::InvalidInput(input, parse_err)
-        })
-        .unwrap_result();
+    let result = input.trim().parse::<u32>().map_err(|parse_err| {
+        // Add a custom error message
+        FibonacciError::InvalidInput(input, parse_err)
+    });
 
-    let fibo = fibonacci(number).unwrap_result();
-    println!("\nO {number}º número na sequência de Fibonacci é {fibo}\n");
+    match result {
+        Ok(n) if n > 0 => {
+            let fibo = fibonacci(n - 1).unwrap_result();
+            println!("\nfibonacci({n:>2}): {fibo}\n");
+        }
+        Ok(_) => eprintln!("\nDigitar n > 0\n"),
+        Err(e) => eprintln!("{e}"),
+    }
 
     Ok(())
 }

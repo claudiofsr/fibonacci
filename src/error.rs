@@ -14,7 +14,7 @@ impl fmt::Display for FibonacciError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             FibonacciError::Overflow(n) => write!(
-                f, 
+                f,
                 "\n\
                 Overflow!\n\
                 Não foi possível calcular a sequência de Fibonacci.\n\
