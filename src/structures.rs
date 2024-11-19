@@ -24,12 +24,6 @@ impl Iterator for Fibonacci {
 }
 
 pub fn fibonacci(index: u32) -> Result<u64, FibonacciError> {
-    if index == 0 {
-        return Ok(0);
-    } else if index == 1 {
-        return Ok(1);
-    }
-
     let mut fibo = Fibonacci::new();
     let mut result = 0;
 
